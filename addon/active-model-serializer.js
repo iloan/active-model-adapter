@@ -337,26 +337,7 @@ function extractPolymorphicRelationships(key, relationshipMeta, resourceHash, re
   let polymorphicKey = decamelize(key);
   let hash = resourceHash[polymorphicKey];
   if (hash !== null && typeof hash === 'object') {
-    if (relationshipMeta.kind === 'belongsTo') {
-      let {id, type} = hash;
-      resourceHash[relationshipKey] = {id, type};
-    // otherwise hasMany
-    } else {
-      let hashes = resourceHash[polymorphicKey];
-
-      if (!hashes) {
-        return;
-      }
-
-      // TODO: replace this with map when ActiveModelAdapter branches for Ember Data 2.0
-      var array = [];
-      for (let i = 0, length = hashes.length; i < length; i++) {
-        let hash = hashes[i];
-        let {id, type} = hash;
-        array.push({id, type});
-      }
-      resourceHash[relationshipKey] = array;
-    }
+    resourceHash[relationshipKey] = hash;
   }
 }
 
